@@ -53,6 +53,9 @@ const SignUp = () => {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code: verification.code,
       });
+
+      console.log("SUCCESSSS", JSON.stringify(completeSignUp));
+
       if (completeSignUp.status === "complete") {
         // await fetchAPI("/(api)/user", {
         //   method: "POST",
@@ -62,6 +65,8 @@ const SignUp = () => {
         //     clerkId: completeSignUp.createdUserId,
         //   }),
         // });
+
+        console.log("SUCCESSSS");
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification({
           ...verification,
@@ -114,7 +119,7 @@ const SignUp = () => {
             label="Password"
             placeholder="Enter password"
             icon={icons.lock}
-            secureTextEntry={true}
+            secureTextEntry={false}
             textContentType="password"
             value={form.password}
             onChangeText={(value) => setForm({ ...form, password: value })}
