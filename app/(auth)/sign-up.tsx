@@ -8,6 +8,7 @@ import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import OAuth from "@/components/OAuth";
 import { icons, images } from "@/constants";
+import { fetchAPI } from "@/lib/fetch";
 
 // import { fetchAPI } from "@/lib/fetch";
 
@@ -57,16 +58,15 @@ const SignUp = () => {
       console.log("SUCCESSSS", JSON.stringify(completeSignUp));
 
       if (completeSignUp.status === "complete") {
-        // await fetchAPI("/(api)/user", {
-        //   method: "POST",
-        //   body: JSON.stringify({
-        //     name: form.name,
-        //     email: form.email,
-        //     clerkId: completeSignUp.createdUserId,
-        //   }),
-        // });
+        await fetchAPI("/(api)/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: completeSignUp.createdUserId,
+          }),
+        });
 
-        console.log("SUCCESSSS");
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification({
           ...verification,
