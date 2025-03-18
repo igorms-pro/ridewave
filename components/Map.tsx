@@ -1,9 +1,20 @@
 import { Text, View } from "react-native";
+import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from "react-native-maps";
 
-const Map = () => (
-  <View className={``}>
-    <Text className="">Map</Text>
-  </View>
-);
+const Map = () => {
+  const region = {};
+
+  return (
+    <MapView
+      provider={(PROVIDER_GOOGLE, PROVIDER_DEFAULT)}
+      className="w=full h-full rounded-2xl"
+      tintColor="black"
+      mapType="mutedStandard"
+      userInterfaceStyle="light"
+      showsPointsOfInterest={false}
+      showsUserLocation={true}
+    />
+  );
+};
 
 export default Map;
