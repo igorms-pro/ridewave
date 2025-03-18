@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import { Platform } from "react-native";
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
+import "react-native-get-random-values";
 
 import { tokenCache } from "@/lib/auth";
 
