@@ -13,6 +13,7 @@ import {
   generateMarkersFromData,
 } from "@/lib/map";
 import { useDriverStore, useLocationStore } from "@/store";
+import { MarkerData } from "@/types/type";
 
 const drivers = [
   {
@@ -26,6 +27,8 @@ const drivers = [
       "https://ucarecdn.com/a2dc52b2-8bf7-4e49-9a36-3ffb5229ed02/-/preview/465x466/",
     car_seats: 4,
     rating: "4.80",
+    latitude: 43.579,
+    longitude: 7.1201,
   },
   {
     id: "2",
@@ -38,6 +41,8 @@ const drivers = [
       "https://ucarecdn.com/a3872f80-c094-409c-82f8-c9ff38429327/-/preview/930x932/",
     car_seats: 5,
     rating: "4.60",
+    latitude: 43.5815,
+    longitude: 7.127,
   },
   {
     id: "3",
@@ -50,6 +55,8 @@ const drivers = [
       "https://ucarecdn.com/289764fb-55b6-4427-b1d1-f655987b4a14/-/preview/930x932/",
     car_seats: 4,
     rating: "4.70",
+    latitude: 43.5778,
+    longitude: 7.1302,
   },
   {
     id: "4",
@@ -62,6 +69,8 @@ const drivers = [
       "https://ucarecdn.com/b6fb3b55-7676-4ff3-8484-fb115e268d32/-/preview/930x932/",
     car_seats: 4,
     rating: "4.90",
+    latitude: 43.585,
+    longitude: 7.1225,
   },
 ];
 
@@ -96,11 +105,10 @@ const Map = () => {
     }
   }, [drivers, userLatitude, userLongitude]);
 
-  console.log({ region });
   return (
     <MapView
       provider={PROVIDER_GOOGLE}
-      className="w=full h-full rounded-2xl"
+      className="w-full h-full rounded-2xl"
       tintColor="black"
       userInterfaceStyle="light"
       showsPointsOfInterest={false}

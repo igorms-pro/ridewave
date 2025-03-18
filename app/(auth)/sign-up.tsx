@@ -55,8 +55,6 @@ const SignUp = () => {
         code: verification.code,
       });
 
-      console.log("SUCCESSSS", JSON.stringify(completeSignUp));
-
       if (completeSignUp.status === "complete") {
         await fetchAPI("/(api)/user", {
           method: "POST",
