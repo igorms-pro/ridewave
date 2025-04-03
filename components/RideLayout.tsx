@@ -1,7 +1,4 @@
-import BottomSheet, {
-  BottomSheetScrollView,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
 import React, { useRef } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
@@ -26,17 +23,20 @@ const RideLayout = ({
       <View className="flex-1 bg-white">
         <View className="flex flex-col h-screen bg-blue-500">
           <View className="flex flex-row absolute z-10 top-16 items-center justify-start px-5">
-            <TouchableOpacity onPress={() => back()}>
+            <TouchableOpacity onPress={() => router.back()}>
               <View className="w-10 h-10 bg-white rounded-full items-center justify-center">
-                <Image source={icons.backArrow} />
+                <Image
+                  source={icons.backArrow}
+                  resizeMode="contain"
+                  className="w-6 h-6"
+                />
               </View>
             </TouchableOpacity>
-            <Text className={`text-xl font-JakartaSemiBold ml-5`}>
-              {title || "Go Back"}{" "}
+            <Text className="text-xl font-JakartaSemiBold ml-5">
+              {title || "Go Back"}
             </Text>
-            <Map />
-            {children}
           </View>
+          <Map />
         </View>
 
         <BottomSheet
@@ -54,14 +54,14 @@ const RideLayout = ({
               {children}
             </BottomSheetView>
           ) : (
-            <BottomSheetScrollView
+            <BottomSheetView
               style={{
                 flex: 1,
                 padding: 20,
               }}
             >
               {children}
-            </BottomSheetScrollView>
+            </BottomSheetView>
           )}
         </BottomSheet>
       </View>
