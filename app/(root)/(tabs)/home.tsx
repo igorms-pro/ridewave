@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/clerk-expo";
 import * as Location from "expo-location";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   Text,
@@ -128,6 +129,7 @@ const Home = () => {
   const { setUserLocation, setDestinationLocation } = useLocationStore();
   const { user } = useUser();
   const loading = false;
+  const { push } = router;
   const [hasPermissions, setHasPermission] = useState(false);
 
   const handleSignOut = () => {};
@@ -136,9 +138,8 @@ const Home = () => {
     longitude: number;
     address: string;
   }) => {
-    // setDestinationLocation(location);
-    //
-    // router.push("/(root)/find-ride");
+    setDestinationLocation(location);
+    push("/(root)/find-ride");
   };
 
   useEffect(() => {

@@ -1,12 +1,10 @@
-import { View, Image } from "react-native";
+import { View, Image, Text } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 import { icons } from "@/constants";
 import { GoogleInputProps } from "@/types/type";
 
 const googlePlacesApiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
-
-console.log("✅ Loaded Google API Key:", googlePlacesApiKey);
 
 const GoogleTextInput = ({
   icon,
@@ -56,10 +54,6 @@ const GoogleTextInput = ({
             },
           }}
           onPress={(data, details = null) => {
-            console.log("📍 Selected Place:", data.description);
-            console.log("🌍 Latitude:", details?.geometry.location.lat);
-            console.log("🌍 Longitude:", details?.geometry.location.lng);
-
             if (details) {
               handlePress({
                 latitude: details.geometry.location.lat,
@@ -91,7 +85,7 @@ const GoogleTextInput = ({
         />
       ) : (
         <View>
-          <Text className="text-red-500">⚠️ Google API Key is missing!</Text>
+          <Text className="text-red-500">Google API Key is missing!</Text>
         </View>
       )}
     </View>
