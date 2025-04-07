@@ -3,10 +3,17 @@ import { useEffect, useState } from "react";
 import { View, Text, Alert } from "react-native";
 
 import CustomButton from "@/components/CustomButton";
+import { PaymentProps } from "@/types/type";
 
 const openPaymentSheet = () => {};
 
-const Payment = () => {
+const Payment = ({
+  fullName,
+  email,
+  amount,
+  driverId,
+  rideTime,
+}: PaymentProps) => {
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);

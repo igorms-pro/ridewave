@@ -13,7 +13,6 @@ const BookRide = () => {
   const { user } = useUser();
   const { userAddress, destinationAddress } = useLocationStore();
   const { drivers, selectedDriver } = useDriverStore();
-
   const driverDetails = drivers?.filter(
     (driver) => +driver.id === selectedDriver,
   )[0];
@@ -93,7 +92,13 @@ const BookRide = () => {
             </View>
           </View>
 
-          <Payment />
+          <Payment
+            fullName={user?.fullName!}
+            email={user?.emailAddresses[0].emailAddress!}
+            amount={driverDetails?.price!}
+            driverId={driverDetails?.id}
+            rideTime={driverDetails.time!}
+          />
         </>
       </RideLayout>
     </StripeProvider>
