@@ -1,32 +1,51 @@
 import { Stripe } from "stripe";
 
-const stripe = new Stripe(process.env.EXPO_PUBLIC_STRIPE_SECRET_KEY);
-// This example sets up an endpoint using the Express framework.
-// Watch this video to get started: https://youtu.be/rPR2aJ6XnAc.
+const stripe = new Stripe(process.env.EXPO_PUBLIC_STRIPE_SECRET_KEY!);
 
-app.post("/payment-sheet", async (req, res) => {
-  // Use an existing Customer ID if this is a returning customer.
-  const customer = await stripe.customers.create();
+export async function POST(request: Request) {
+  const body = await request.json();
+  const { name, email, amount } = body;
+
+  if (!name || !email || !amount) {
+    return new Response(JSON.stringify({ error: "Missing required fields" }), {
+      status: 400,
+    });
+  }
+
+  let customer;
+  const doesCustomerExist = await stripe.customers.list({
+    email,
+  });
+
+  if (doesCustomerExist.data.length > 0) {
+    customer = doesCustomerExist.data[0];
+  } else {
+    const newCustomer = await stripe.customers.create({
+      name,
+      email,
+    });
+    customer = newCustomer;
+  }
+
   const ephemeralKey = await stripe.ephemeralKeys.create(
     { customer: customer.id },
-    { apiVersion: "2025-03-31.basil" },
+    { apiVersion: "2024-06-20" },
   );
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: 1099,
+    amount: parseInt(amount) * 100,
     currency: "eur",
     customer: customer.id,
-    // In the latest version of the API, specifying the `automatic_payment_methods` parameter
-    // is optional because Stripe enables its functionality by default.
     automatic_payment_methods: {
       enabled: true,
+      allow_redirects: "never",
     },
   });
 
-  res.json({
-    paymentIntent: paymentIntent.client_secret,
-    ephemeralKey: ephemeralKey.secret,
-    customer: customer.id,
-    publishableKey:
-      "pk_test_51RA4xmR6z1ApXilLLj4KNDt173GgWU9knB3gtC4upfQVCTqM3LVxqRMOkm5erp4xtuMramFtEgIgjaCYViNC4CCk006IiSSzHk",
-  });
-});
+  return new Response(
+    JSON.stringify({
+      paymentIntent: paymentIntent,
+      ephemeralKey: ephemeralKey,
+      customer: customer.id,
+    }),
+  );
+}
